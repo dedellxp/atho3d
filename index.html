@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181816">
+  <title>Atho 3D · Gestão de negócios</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%23181816'/%3E%3Cpath d='M9 29L20 9l11 20h-6l-5-10-5 10z' fill='%23c5a15a'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <!-- Coloque bg.png e logo.png na mesma pasta deste arquivo. -->
+  <section id="login" class="login-screen">
+    <div class="login-card">
+      <div class="brand">
+        <div class="logo-box"><span aria-hidden="true">A</span><img src="logo.png" alt="Logo Atho 3D"></div>
+        <div><p class="eyebrow">IMPRESSÃO 3D</p><h1>Atho 3D</h1><p class="muted">Gestão de negócios</p></div>
+      </div>
+      <div class="login-divider"></div>
+      <h2>Entre no seu espaço</h2>
+      <p class="muted">Encomendas, financeiro e estoque em um só lugar.</p>
+      <form id="login-form">
+        <label for="login-user">Usuário</label>
+        <select id="login-user" required>
+          <option value="">Selecione seu nome</option>
+          <option value="Janaina">Janaina</option>
+          <option value="Nathalia">Nathalia</option>
+          <option value="Gustavo">Gustavo</option>
+          <option value="Admin">Admin</option>
+        </select>
+        <label for="login-password">Senha</label>
+        <input id="login-password" type="password" autocomplete="current-password" required>
+        <p id="login-error" class="error" role="alert"></p>
+        <button class="primary full" type="submit">Entrar no sistema <span aria-hidden="true">→</span></button>
+      </form>
+      <details class="connection-settings" id="connection-settings">
+        <summary>Configurar conexão</summary>
+        <form id="connection-form">
+          <label for="database-url">URL do Realtime Database</label>
+          <input id="database-url" type="url" placeholder="Cole a URL exibida no Firebase" required>
+          <p class="muted small">Firebase → Realtime Database → Dados. Informe a URL completa, incluindo https://.</p>
+          <button class="secondary full" type="submit">Salvar conexão</button>
+        </form>
+      </details>
+      <p id="login-status" class="small muted" role="status">Preparando conexão…</p>
+    </div>
+    <p class="login-footer">Da ideia à peça. Da peça ao negócio.</p>
+  </section>
+
+  <div id="app" hidden>
+    <header class="topbar">
+      <button class="brand-mini" data-nav="dashboard" aria-label="Abrir painel principal">ATHO <span>3D</span></button>
+      <span class="topbar-divider"></span>
+      <span id="page-title">Painel principal</span>
+      <div class="topbar-end">
+        <span id="connection-state" class="connection" role="status">Conectando…</span>
+        <span id="user-name" class="user-name"></span>
+        <button id="menu-toggle" class="secondary compact" aria-controls="sidebar" aria-expanded="true">☰ Menu</button>
+      </div>
+    </header>
+    <aside id="sidebar" class="sidebar" aria-label="Menu rápido">
+      <div class="sidebar-heading"><span>NAVEGAÇÃO</span><button id="menu-close" class="icon-button" aria-label="Fechar menu">×</button></div>
+      <nav>
+        <button data-nav="dashboard">◈ <span>Painel principal</span></button>
+        <button data-nav="catalog">⊕ <span>Cadastro</span></button>
+        <button data-nav="orders">▤ <span>Encomendas</span></button>
+        <button data-nav="finance">◉ <span>Financeiro</span></button>
+        <div class="nav-group">
+          <button data-nav="expenses">Despesas</button>
+          <button data-nav="payments">Pagamentos</button>
+          <button data-nav="reports">Relatórios</button>
+        </div>
+        <button data-nav="stock">▦ <span>Estoque</span></button>
+      </nav>
+      <div class="sidebar-bottom"><p id="current-date" class="small muted"></p><button id="logout" class="secondary full">Sair do sistema</button></div>
+    </aside>
+    <main id="content" tabindex="-1"></main>
+  </div>
+
+  <dialog id="modal" aria-labelledby="modal-title">
+    <div class="modal-header"><h2 id="modal-title"></h2><button id="modal-close" class="icon-button" aria-label="Fechar janela">×</button></div>
+    <div id="modal-body"></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript>Ative o JavaScript do navegador para utilizar o sistema.</noscript>
+</body>
+</html>
