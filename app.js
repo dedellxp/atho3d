@@ -4,7 +4,7 @@
 const firebaseConfig = {
   apiKey: "AIzaSyAUSH3d_wDx2ampbpaDz7K_mZ_avMUKqMU",
   authDomain: "atho3d.firebaseapp.com",
-  databaseURL: "",
+  databaseURL: "https://atho3d-default-rtdb.firebaseio.com/",
   projectId: "atho3d",
   storageBucket: "atho3d.firebasestorage.app",
   messagingSenderId: "814861196913",
